@@ -5,10 +5,10 @@ import 'package:flutter/material.dart' show ChangeNotifier;
 import 'package:http/http.dart' as http;
 
 import '../models/user_model.dart';
-import 'name_provider.dart';
 
 class FetchDetailProvider extends ChangeNotifier {
-  final NameProvider? _nameProvider;
+  final String? _name;
+  final String? _address;
 
   bool _loading = false;
   String? _error;
@@ -18,10 +18,21 @@ class FetchDetailProvider extends ChangeNotifier {
   String? get error => _error;
   UserModel? get detail => _detail;
 
-  FetchDetailProvider(this._nameProvider) {
-    if (_nameProvider != null && _nameProvider!.name != null) {
-      fetchValue(_nameProvider!.name!);
+  FetchDetailProvider(this._name, this._address) {
+    if (_name != null) {
+      log('NAME $_name');
+      fetchValue(_name!);
     }
+    if (_address != null) {
+      log('Address $_address');
+    }
+  }
+
+  int? _ageValue;
+  int? get ageValue => _ageValue;
+  changeAge(int? x) {
+    _ageValue = x;
+    notifyListeners();
   }
 
   // fetch value

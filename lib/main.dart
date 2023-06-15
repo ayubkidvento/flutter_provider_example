@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_provider_example/providers/fetch_detail_provider.dart';
-import 'package:flutter_provider_example/providers/name_provider.dart';
 import 'package:provider/provider.dart';
 
+import 'providers/fetch_detail_provider.dart';
+import 'providers/name_provider.dart';
+import 'providers/number_provider.dart';
 import 'screens/home_screen.dart';
 
 void main() {
@@ -20,10 +21,18 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<NameProvider>(
           create: (ctx) => NameProvider(),
         ),
-        ChangeNotifierProxyProvider<NameProvider?, FetchDetailProvider>(
-          create: (ctx) => FetchDetailProvider(null),
-          update: (context, value, previous) => FetchDetailProvider(value),
+        ChangeNotifierProvider<NumberProvider>(
+          create: (ctx) => NumberProvider(),
         ),
+        ChangeNotifierProxyProvider<NameProvider, FetchDetailProvider>(
+          create: (ctx) => FetchDetailProvider(null, null),
+          update: (context, value, previous) =>
+              FetchDetailProvider(value.name, value.address),
+        ),
+        // ChangeNotifierProxyProvider<NumberProvider, FetchDetailProvider>(
+        //   create: (_) => FetchDetailProvider(null),
+        //   update: (_, value, previous) => FetchDetailProvider(value.age),
+        // ),
       ],
       child: const MaterialApp(
         debugShowCheckedModeBanner: false,

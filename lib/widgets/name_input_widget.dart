@@ -8,16 +8,34 @@ class NameInputWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      initialValue: context.watch<NameProvider>().name,
-      decoration: const InputDecoration(
-        isDense: true,
-        hintText: 'Enter github username...',
-        border: OutlineInputBorder(),
-        enabledBorder: OutlineInputBorder(),
-        focusedBorder: OutlineInputBorder(),
-      ),
-      onFieldSubmitted: (x) => context.read<NameProvider>().updateName(x),
+    var watch = context.watch<NameProvider>();
+    var provider = context.read<NameProvider>();
+    return Column(
+      children: [
+        TextFormField(
+          initialValue: watch.name,
+          decoration: const InputDecoration(
+            isDense: true,
+            hintText: 'Enter github username...',
+            border: OutlineInputBorder(),
+            enabledBorder: OutlineInputBorder(),
+            focusedBorder: OutlineInputBorder(),
+          ),
+          onFieldSubmitted: (x) => provider.updateName(x),
+        ),
+        const SizedBox(height: 12),
+        TextFormField(
+          initialValue: watch.address,
+          decoration: const InputDecoration(
+            isDense: true,
+            hintText: 'Enter address...',
+            border: OutlineInputBorder(),
+            enabledBorder: OutlineInputBorder(),
+            focusedBorder: OutlineInputBorder(),
+          ),
+          onFieldSubmitted: (x) => provider.updateAddress(x),
+        ),
+      ],
     );
   }
 }
